@@ -16,7 +16,11 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <button id="counter" type="button"></button>
     </div>
     <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
+      <div class="flex flex-col gap-3">
+        <a href="/">Home</a> |
+        <a href="/about/">About</a> |
+        <a href="/other/page/">Other</a>
+      </div>
     </p>
   </div>
 `;

@@ -60,3 +60,88 @@ Use relative path.
 └─ package.json
 └─ vite.config.ts
 ```
+
+## Adding Multiple Pages
+
+Add multiple pages inside the `src/` folder and update the `vite.config.ts`
+
+```txt
+.
+├─ public/
+├─ src/
+│   ├─ about/index.html
+│   ├─ other/page/
+│   │   ├─ index.html
+│   │   └─ main.ts
+│   ├─ index.html
+│   ├─ main.ts
+│   └─ style.css
+└─ package.json
+└─ vite.config.ts
+```
+
+```ts
+import { defineConfig } from 'vite';
+import { resolve } from 'path';
+
+const root = resolve(__dirname, 'src');
+const outDir = resolve(__dirname, 'dist');
+const publicDir = resolve(__dirname, 'public');
+
+export default defineConfig({
+  appType: 'mpa', // the extra '/' at the end of every URL path matters
+  base: '',
+  root,
+  publicDir,
+  build: {
+    outDir,
+    emptyOutDir: true, // explicit true since 'dist' is NOT a sub-directory of 'src'
+    rollupOptions: {
+      input: {
+        main: resolve(root, 'index.html'),
+        about: resolve(root, 'about/index.html'),
+        other: resolve(root, 'other/page/index.html'),
+        '404': resolve(root, '404.html'),
+      },
+    },
+  },
+});
+```
+
+### D.R.Y Vite Configuration
+
+```ts
+import { defineConfig } from 'vite';
+import { resolve } from 'path';
+
+const r = (path: string) => {
+  return resolve(__dirname, path);
+};
+
+const root = r('src');
+const outDir = r('dist');
+const publicDir = r('public');
+
+const page = (path: string) => {
+  return resolve(root, path);
+};
+
+export default defineConfig({
+  appType: 'mpa', // the extra '/' at the end of every URL path matters
+  base: '',
+  root,
+  publicDir,
+  build: {
+    outDir,
+    emptyOutDir: true, // explicit true since 'dist' is NOT a sub-directory of 'src'
+    rollupOptions: {
+      input: {
+        main: page('index.html'),
+        about: page('about/index.html'),
+        other: page('other/page/index.html'),
+        '404': page('404.html'),
+      },
+    },
+  },
+});
+```
