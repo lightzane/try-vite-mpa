@@ -3,6 +3,10 @@ import typescriptLogo from './typescript.svg';
 import viteLogo from '../public/vite.svg';
 import { setupCounter } from './counter.ts';
 
+const basename = import.meta.env.PROD // vite-env.d.ts
+  ? '/try-vite-mpa'
+  : '';
+
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div class="animate-enter">
     <div class="flex flex-row gap-20 justify-center">
@@ -19,9 +23,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div>
     <p class="read-the-docs">
       <div class="flex flex-row gap-3 justify-center">
-        <a href="/">Home</a> |
-        <a href="/about/">About</a> |
-        <a href="/other/page/">Other</a>
+        <a href="${basename}/">Home</a> |
+        <a href="${basename}/about/">About</a> |
+        <a href="${basename}/other/page/">Other</a>
       </div>
     </p>
   </div>
