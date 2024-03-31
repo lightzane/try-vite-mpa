@@ -145,3 +145,33 @@ export default defineConfig({
   },
 });
 ```
+
+## Add Tailwindcss
+
+```bash
+npm i -D tailwindcss autoprefixer postcss
+npx tailwindcss init -p
+```
+
+`tailwind.config.js`
+
+```ts
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./src/**/*.html', './src/**/*.ts'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+### Add tailwind directives
+
+`style.css`
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
